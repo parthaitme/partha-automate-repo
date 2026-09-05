@@ -36,10 +36,13 @@ jobs:
         run: docker push -t {{SECRET.DOCKER_USERNAME}}/demo-war:latest
 
       - name: deploy to EC2 server
-        uses: docker://evaneos/ssh-action:0.1.0
-    with:
-      hosts: {{SECRET.DOCKER_USERNAME}}
-      user: parthaitme
-      private_key: ${{ secrets.PRIVATE_SSH_KEY }}
-      knock_sequence: ${{ secrets.KNOCK_SEQUENCE }}
-      commands: echo "Hello world!"
+        uses: JimCronqvist/action-ssh@master
+        env:
+          NAME: "Root"
+        with:
+          hosts: 'user@domain.com user@domain2.com:2222'
+          privateKey: ${{ secrets.PRIVATE_KEY }}
+          debug: false
+          command: |
+            ls -lah
+            echo "I am $NAME"
