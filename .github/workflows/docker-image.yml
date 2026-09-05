@@ -29,7 +29,11 @@ jobs:
       - name: login to github
         run: docker login -u "{{SECRET.DOCKER_USERNAME}}"  --password-stdin
 
-      - name: push docker image
+      - name: build docker image
+        run: docker build -t {{SECRET.DOCKER_USERNAME}}/demo-war:latest
+
+      - name: push docker image to Docker hub
+        run: docker push -t {{SECRET.DOCKER_USERNAME}}/demo-war:latest
 
       - name: deploy to EC2 server
-      
+        run: 
