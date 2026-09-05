@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Build the Docker image
+      - name: code checkout
         run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
 
       - name: setup Java
@@ -22,3 +22,14 @@ jobs:
           distribution: temurin
           java-version: latest
       - run: java --version
+
+      - name: build war
+        run: ./mvn clean install -DskipTests
+        
+      - name: login to github
+        run: docker login -u "{{SECRET.DOCKER_USERNAME}}"  --password-stdin
+
+      - name: push docker image
+
+      - name: deploy to EC2 server
+      
