@@ -27,13 +27,13 @@ jobs:
         run: ./mvn clean install -DskipTests
         
       - name: login to github
-        run: docker login -u "{{SECRET.DOCKER_USERNAME}}"  --password-stdin
+        run: docker login -u "${{SECRET.DOCKER_USERNAME}}"  --password-stdin
 
       - name: build docker image
-        run: docker build -t {{SECRET.DOCKER_USERNAME}}/demo-war:latest
+        run: docker build -t ${{SECRET.DOCKER_USERNAME}}/demo-war:latest
 
       - name: push docker image to Docker hub
-        run: docker push -t {{SECRET.DOCKER_USERNAME}}/demo-war:latest
+        run: docker push -t ${{SECRET.DOCKER_USERNAME}}/demo-war:latest
 
       - name: deploy to EC2 server
         uses: JimCronqvist/action-ssh@master
